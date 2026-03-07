@@ -1,0 +1,239 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  validate-structure:
+    name: Validate skill structure and frontmatter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check required files exist
+        run: |
+          echo "Checking required files..."
+          MISSING=0
+
+          required_files=(
+            "SKILL.md"
+            "README.md"
+            "LICENSE"
+            "CONTRIBUTING.md"
+            "install.sh"
+            ".github/workflows/validate.yml"
+          )
+
+          for f in "${required_files[@]}"; do
+            if [ -f "$f" ]; then
+              echo "  ✅ $f"
+            else
+              echo "  ❌ MISSING: $f"
+              MISSING=1
+            fi
+          done
+
+          [ $MISSING -eq 0 ] || exit 1
+
+      - name: Check reference files exist
+        run: |
+          echo "Checking references/..."
+          MISSING=0
+
+          refs=(
+            "references/network.md"
+            "references/ci.md"
+            "references/component-testing.md"
+            "references/patterns.md"
+            "references/config.md"
+            "references/assertions.md"
+            "references/selectors.md"
+            "references/commands.md"
+          )
+
+          for f in "${refs[@]}"; do
+            if [ -f "$f" ]; then
+              echo "  ✅ $f"
+            else
+              echo "  ❌ MISSING: $f"
+              MISSING=1
+            fi
+          done
+
+          [ $MISSING -eq 0 ] || exit 1
+
+      - name: Check example files exist
+        run: |
+          echo "Checking examples/..."
+          MISSING=0
+
+          examples=(
+            "examples/auth-flow.cy.js"
+            "examples/api-intercept.cy.js"
+            "examples/page-objects.cy.js"
+            "examples/custom-commands.js"
+          )
+
+          for f in "${examples[@]}"; do
+            if [ -f "$f" ]; then
+              echo "  ✅ $f"
+            else
+              echo "  ❌ MISSING: $f"
+              MISSING=1
+            fi
+          done
+
+          [ $MISSING -eq 0 ] || exit 1
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          echo "Validating SKILL.md frontmatter..."
+          python3 - <<'EOF'
+          import sys
+
+          with open('SKILL.md') as f:
+              content = f.read()
+
+          if not content.startswith('---'):
+              print('  ❌ SKILL.md must start with --- frontmatter')
+              sys.exit(1)
+
+          end = content.index('---', 3)
+          fm = content[3:end]
+
+          errors = []
+          if 'name:' not in fm:
+              errors.append('Missing required field: name')
+          if 'description:' not in fm:
+              errors.append('Missing required field: description')
+
+          for line in fm.splitlines():
+              if line.startswith('description:'):
+                  desc = line.split(':', 1)[1].strip()
+                  if not desc:
+                      errors.append('description field is empty')
+
+          if errors:
+              for e in errors:
+                  print(f'  ❌ {e}')
+              sys.exit(1)
+
+          print('  ✅ name field present')
+          print('  ✅ description field present')
+          print('  ✅ Frontmatter valid')
+          EOF
+
+      - name: Check no files are empty
+        run: |
+          echo "Checking file sizes..."
+          WARN=0
+
+          for f in $(find . -name "*.md" -not -path "./.git/*" -not -path "./node_modules/*"); do
+            size=$(wc -c < "$f")
+            if [ "$size" -lt 100 ]; then
+              echo "  ⚠️  WARNING: $f is very small ($size bytes)"
+              WARN=1
+            else
+              echo "  ✅ $f (${size} bytes)"
+            fi
+          done
+
+          [ $WARN -eq 0 ] && echo "All files have content" || echo "Some files are small — review if intentional"
+
+      - name: Check SKILL.md has {baseDir} references
+        run: |
+          echo "Checking {baseDir} references in SKILL.md..."
+          if grep -q '{baseDir}' SKILL.md; then
+            echo "  ✅ {baseDir} references found (OpenClaw path injection)"
+          else
+            echo "  ⚠️  No {baseDir} references found — consider adding them so agents can locate reference files"
+          fi
+
+  lint-js-examples:
+    name: Lint JavaScript examples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22   
+
+      - name: Check JS syntax (node --check)
+        run: |
+          echo "Checking JS syntax..."
+          ERRORS=0
+
+          for f in examples/*.js; do
+            if node --check "$f" 2>&1; then
+              echo "  ✅ $f"
+            else
+              echo "  ❌ Syntax error: $f"
+              ERRORS=1
+            fi
+          done
+
+          [ $ERRORS -eq 0 ] || exit 1
+
+      - name: Check for deprecated Cypress.env() usage
+        run: |
+          echo "Checking for deprecated Cypress.env() calls..."
+          FOUND=0
+
+          for f in examples/*.js SKILL.md references/*.md; do
+            if grep -q "Cypress\.env(" "$f" 2>/dev/null; then
+              echo "  ⚠️  $f uses deprecated Cypress.env() — migrate to cy.env() or Cypress.expose()"
+              FOUND=1
+            fi
+          done
+
+          if [ $FOUND -eq 1 ]; then
+            echo ""
+            echo "  Cypress.env() was deprecated in v15.10.0 and will be removed in v16."
+            echo "  Use cy.env(['key']) for secrets, Cypress.expose('key') for public config."
+            exit 1
+          else
+            echo "  ✅ No deprecated Cypress.env() usage found"
+          fi
+
+      - name: Check example files reference cy. commands
+        run: |
+          echo "Checking examples contain Cypress commands..."
+
+          for f in examples/*.cy.js; do
+            if grep -q 'cy\.' "$f"; then
+              echo "  ✅ $f (contains cy. commands)"
+            else
+              echo "  ⚠️  $f may not contain Cypress commands"
+            fi
+          done
+
+  check-install-script:
+    name: Validate install.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check install.sh syntax
+        run: |
+          bash -n install.sh && echo "  ✅ install.sh syntax valid" || (echo "  ❌ install.sh has syntax errors" && exit 1)
+
+      - name: Check install.sh has agent paths
+        run: |
+          echo "Checking install.sh covers required agents..."
+          MISSING=0
+
+          agents=("open-claw" "claude-code" "codex" "cursor")
+          for agent in "${agents[@]}"; do
+            if grep -q "$agent" install.sh; then
+              echo "  ✅ $agent install path present"
+            else
+              echo "  ❌ Missing install path for: $agent"
+              MISSING=1
+            fi
+          done
+
+          [ $MISSING -eq 0 ] || exit 1
