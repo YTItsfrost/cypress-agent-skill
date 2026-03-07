@@ -4,9 +4,9 @@
 > Works with Claude Code, Codex CLI, OpenClaw, Cursor, and any agent that reads SKILL.md files.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Cypress](https://img.shields.io/badge/Cypress-13.x-04C38E?logo=cypress)](https://docs.cypress.io)
+[![Cypress](https://img.shields.io/badge/Cypress-15.x-04C38E?logo=cypress)](https://docs.cypress.io)
 [![AgentSkills Compatible](https://img.shields.io/badge/AgentSkills-compatible-purple)](https://agentskills.io)
-[![Validate](https://github.com/kahlilr23/cypress-agent-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/kahlilr23/cypress-agent-skill/actions/workflows/validate.yml)
+[![Validate](https://github.com/KahlilR23/cypress-agent-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/KahlilR23/cypress-agent-skill/actions/workflows/validate.yml)
 
 ---
 
@@ -22,47 +22,47 @@ One `SKILL.md` at the root. No nested directories. Agents clone this repo and re
 
 ### OpenClaw (global — available to all agents)
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   ~/.openclaw/skills/cypress-agent-skill
 ```
 
 ### Claude Code (project-level)
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   .claude/skills/cypress-agent-skill
 ```
 
 ### Claude Code (personal — available in all projects)
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   ~/.claude/skills/cypress-agent-skill
 ```
 
 ### Codex CLI
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   .agents/skills/cypress-agent-skill
 ```
 
 ### Cursor
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   .cursor/skills/cypress-agent-skill
 ```
 
 ### Global (works with Codex, Gemini CLI, Kiro, Antigravity simultaneously)
 ```bash
-git clone https://github.com/kahlilr23/cypress-agent-skill \
+git clone https://github.com/KahlilR23/cypress-agent-skill \
   ~/.agents/skills/cypress-agent-skill
 ```
 
 ### One-liner bash installer
 ```bash
 # Detects platform automatically
-bash <(curl -fsSL https://raw.githubusercontent.com/kahlilr23/cypress-agent-skill/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/KahlilR23/cypress-agent-skill/main/install.sh)
 
 # Or with explicit agent
-bash <(curl -fsSL https://raw.githubusercontent.com/kahlilr23/cypress-agent-skill/main/install.sh) --agent open-claw
+bash <(curl -fsSL https://raw.githubusercontent.com/KahlilR23/cypress-agent-skill/main/install.sh) --agent open-claw
 ```
 
 ### LobeHub CLI
@@ -74,6 +74,11 @@ npx -y @lobehub/market-cli skills install cypress-expert --agent open-claw
 ### ClawHub (OpenClaw native)
 ```bash
 clawhub install cypress-agent-skill
+```
+
+### skills.sh (Vercel ecosystem — Claude Code, Codex, Cursor, Windsurf, and more)
+```bash
+npx skills add KahlilR23/cypress-agent-skill
 ```
 
 ---
